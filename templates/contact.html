@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <section class="page">
+    <h2>Contact Us</h2>
+    <form method="POST" action="/contact">
+      <input type="text" name="name" placeholder="Your Name" required><br>
+      <input type="email" name="email" placeholder="Your Email" required><br>
+      <textarea name="message" placeholder="Your Message" rows="4" required></textarea><br>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+</body>
+</html>

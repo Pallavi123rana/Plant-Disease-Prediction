@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predict</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    .loader {
+      display: none;
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .result-card {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #f2f2f2;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <section class="page">
+    <h2>Upload Image to Predict</h2>
+    <form method="POST" enctype="multipart/form-data" action="/predict" onsubmit="showLoader()">
+      <input type="file" name="image" required>
+      <button type="submit">Predict</button>
+    </form>
+
+    <div class="loader" id="loader"></div>
+
+    {% if prediction %}
+      <div class="result-card">
+        <h3>Prediction: {{ prediction }}</h3>
+        {% if image %}
+          <img src="{{ image }}" alt="Uploaded Leaf" style="max-width: 300px; margin-top: 10px; border-radius: 12px;">
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
+
+  <div class="toast" id="toast">Uploading...</div>
+
+  <script>
+    function showLoader() {
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('toast').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('toast').innerText = 'Predicting...';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
